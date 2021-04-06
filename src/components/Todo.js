@@ -31,7 +31,8 @@ class Todo extends Component {
         { key: getKey(), text: 'reactを勉強する', done: false },
         { key: getKey(), text: '明日の準備をする', done: false },
         /* テストコード 終了 */
-      ]
+      ],
+      filter: 'all'
     }
   }
 
@@ -49,15 +50,36 @@ class Todo extends Component {
     })
   }
 
+  filterStatus = (status) => {
+    if(status === 'all'){
+      this.setState({
+        filter: 'all'
+      })
+    }else if(status === 'unactive') {
+      this.setState({
+        filter: 'unactive'
+      })
+    }else {
+      this.setState({
+        filter: 'active'
+      })
+    }
+  }
+
   render() {
-    const {items} = this.state
+    const {items, filter} = this.state
     return (
       <div className="panel">
         <div className="panel-heading">
           ITSS ToDoアプリ
         </div>
         <Input handleAddTodoItem={this.handleAddTodoItem}/>
-        {items.map(item => (
+        <Filter filter={filter} filterStatus={this.filterStatus}/>
+        {
+        items.filter(item => {
+          return (filter === 'all') || (filter === 'unactive' && item.done) || (filter === 'active' && !item.done)
+        })
+        .map(item => (
           <TodoItem 
             key={item.key}
             item={item}
