@@ -1,24 +1,45 @@
-import React, { useState } from 'react';
+import React, {Component } from 'react';
 /* 
   【inputコンポーネント】
 　・新しいTodoを作成するINPUTフィールドを作成するコンポーネント
 　・Enterをクリックされたら入力された文字を使って新しいTodoを作成する
 */
-const handleAddTodoItem = (e) => {
-  e.preventDefault()
-  
-}
 
+class Input extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      input: ''
+    }
+  }
+  handleAddTodoItem = (e) => {
+    e.preventDefault()
+    this.props.handleAddTodoItem(this.state.input)
+    this.setState({
+			input: ''
+		})
+  }
 
-function Input(props) {
+  handleSetState = (e) => {
+    this.setState({
+      input: e.target.value
+    })
+  }
 
-  return (
-    <div>
-      <form method="post" onSubmit={handleAddTodoItem}>
-        <input class="input" type="text" placeholder="Text input" />
-      </form>
-    </div>
-  );
+  render() {
+    return (
+      <div>
+        <form method="post" onSubmit={this.handleAddTodoItem}>
+          <input 
+            class="input" type="text" 
+            placeholder="Text input" 
+            onChange={this.handleSetState} 
+						value={this.state.input}
+          />
+        </form>
+      </div>
+    );
+  }
 }
 
 export default Input;
