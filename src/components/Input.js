@@ -4,10 +4,19 @@ import React, { useState } from 'react';
 　・新しいTodoを作成するINPUTフィールドを作成するコンポーネント
 　・Enterをクリックされたら入力された文字を使って新しいTodoを作成する
 */
-function Input(  ) {
+const handleAddTodoItem = (e) => {
+  e.preventDefault()
+  
+}
+
+
+function Input(props) {
 
   return (
-    <div className="panel-block">
+    <div>
+      <form method="post" onSubmit={handleAddTodoItem}>
+        <input class="input" type="text" placeholder="Text input" />
+      </form>
     </div>
   );
 }
